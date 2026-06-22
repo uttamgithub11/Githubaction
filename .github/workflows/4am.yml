@@ -1,8 +1,14 @@
 name: Java CI/CD Pipeline to Tomcat
+
 on:
   push:
-    branches: [ main ]  
-        steps:
+    branches: [ main ]   # Trigger on push to main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
       # 1. Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
