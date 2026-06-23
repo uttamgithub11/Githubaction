@@ -62,16 +62,25 @@ jobs:
             -Dsonar.host.url=$SONAR_HOST \
             -Dsonar.token=$SONAR_TOKEN      
             
-      # 8. Deploy WAR via Tomcat Manager
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment: production
+
+    steps:
+      # 8. Download WAR artifact
+      - name: Download WAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: myapp
+
+      # 9. Deploy WAR via Tomcat Manager
       - name: Deploy to Tomcat
         run: |
-          WAR_FILE=$(find target -name "*.war" | head -1)
-      
-          curl -v \
-            -u "${{ secrets.TOMCAT_USER }}:${{ secrets.TOMCAT_PASSWORD }}" \
-            -T "$WAR_FILE" \
-            "http://13.201.85.32:8080/manager/text/deploy?path=/myapp&update=true"
-      
+          WAR_FILE=$(ls *.war)
+          echo "Deploying $WAR_FILE to Tomcat..."
+          curl -v --upload-file "$WAR_FILE" \
+            "http://${{ secrets.TOMCAT_USER }}:${{ secrets.TOMCAT_PASSWORD }}@${{ secrets.TOMCAT_HOST }}/manager/text/deploy?path=/myapp&update=true"
       # 9. Optional: verify deployment
       - name: Verify deployment
         run: |
