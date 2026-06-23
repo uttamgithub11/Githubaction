@@ -62,19 +62,6 @@ jobs:
             -Dsonar.projectKey=hotstar \
             -Dsonar.host.url=$SONAR_HOST \
             -Dsonar.login=$SONAR_LOGIN
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment: production
-
-    steps:
-      # 7. Download WAR artifact
-      - name: Download WAR artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: myapp
-
       # 8. Deploy WAR via Tomcat Manager
       - name: Deploy to Tomcat
         run: |
