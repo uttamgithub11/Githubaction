@@ -70,7 +70,7 @@ jobs:
           curl -v \
             -u "${{ secrets.TOMCAT_USER }}:${{ secrets.TOMCAT_PASSWORD }}" \
             -T "$WAR_FILE" \
-            "http://${{ secrets.TOMCAT_HOST }}/manager/text/deploy?path=/myapp&update=true"
+            "http://13.201.85.32:8080/manager/text/deploy?path=/myapp&update=true"
       
       # 9. Optional: verify deployment
       - name: Verify deployment
