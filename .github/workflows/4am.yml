@@ -62,6 +62,7 @@ jobs:
             -Dsonar.projectKey=hotstar \
             -Dsonar.host.url=$SONAR_HOST \
             -Dsonar.login=$SONAR_LOGIN
+            
       # 8. Deploy WAR via Tomcat Manager
       - name: Deploy to Tomcat
         run: |
